@@ -14,7 +14,8 @@ public class MainWindow : Window, IDisposable
     private readonly Plugin plugin;
     private bool achievementsRequested;
 
-    public static readonly Dawntrail _dawntrail_relic = new();
+    public static readonly Dawntrail.Penumbrae _dawntrailPenumbraeRelic = new();
+    public static readonly Dawntrail.Umbrae _dawntrailUmbraeRelic = new();
 
     public MainWindow(Plugin plugin)
         : base("Relic Tracker##RelicTrackerMain", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
@@ -64,15 +65,15 @@ public class MainWindow : Window, IDisposable
         }
 
         ImGui.Spacing();
-        Util.DrawRelicsTable(_dawntrail_relic.Penumbrae);
+        ImGui.Text(_dawntrailPenumbraeRelic.Name);
+        Util.DrawRelicsTable(_dawntrailPenumbraeRelic.Data);
         ImGui.Spacing();
-
-        ImGui.Text($"Remaining {_dawntrail_relic.Penumbrae.ExchangeItem!.Value.Name}: {(_dawntrail_relic.Penumbrae.ClassAchievementMap.Count - _dawntrail_relic.Penumbrae.GetCompletedCount()) * _dawntrail_relic.Penumbrae.ExchangeItemMultiplier}");
+        ImGui.Text(_dawntrailPenumbraeRelic.Data.GetRemainText());
 
         ImGui.Spacing();
-        Util.DrawRelicsTable(_dawntrail_relic.Umbrae);
+        ImGui.Text(_dawntrailUmbraeRelic.Name);
+        Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
         ImGui.Spacing();
-
-        ImGui.Text($"Remaining {_dawntrail_relic.Umbrae.ExchangeItem!.Value.Name}: {(_dawntrail_relic.Umbrae.ClassAchievementMap.Count - _dawntrail_relic.Umbrae.GetCompletedCount()) * _dawntrail_relic.Umbrae.ExchangeItemMultiplier}");
+        ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
     }
 }

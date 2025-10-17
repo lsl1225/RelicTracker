@@ -3,6 +3,8 @@ using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility.Raii;
 using FFXIVClientStructs.FFXIV.Common.Math;
+using RelicTracker.Data;
+using System;
 using System.Linq;
 using static RelicTracker.Data.General;
 
@@ -10,7 +12,7 @@ namespace RelicTracker
 {
     public class Util
     {
-        public static void DrawRelicsTable(IRelicData relicData)
+        public static void DrawRelicsTable(IRelicPhaseData relicData)
         {
             var flags =
                 ImGuiTableFlags.Borders |
@@ -33,16 +35,24 @@ namespace RelicTracker
                 for (var i = 0; i < relicData.ClassAchievementMap.Count; i++)
                 {
                     var p = relicData.ClassAchievementMap.ElementAt(i);
+                    var job = Job.GetJob(p.Key);
+                    var achi = relicData.GetAchievement(p.Value);
+
+                    if (job == null || achi == null)
+                    {
+                        throw new Exception();
+                    }
+
                     ImGui.TableNextRow();
 
                     ImGui.TableSetColumnIndex(0);
-                    ImGui.TextUnformatted(p.Key.Name.ToString());
+                    ImGui.TextUnformatted(job.Value.Name.ToString());
 
                     ImGui.TableNextColumn();
-                    ImGui.TextUnformatted(p.Value.Description.ToString());
+                    ImGui.TextUnformatted(achi.Value.Description.ToString());
 
                     ImGui.TableNextColumn();
-                    var active = GetIsComplete(p.Value.RowId);
+                    var active = GetIsComplete(achi.Value.RowId);
 
                     using var color = new ImRaii.Color();
                     color.Push(ImGuiCol.TextDisabled, !active ? ImGuiColors.DalamudRed : ImGuiColors.ParsedGreen);

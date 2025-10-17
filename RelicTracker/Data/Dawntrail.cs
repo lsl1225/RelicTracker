@@ -1,126 +1,76 @@
-using Lumina.Excel.Sheets;
-using Lumina.Extensions;
-using System.Collections.Generic;
-using System.Linq;
 using static RelicTracker.Data.General;
 
 namespace RelicTracker.Data
 {
     public class Dawntrail
     {
-        public IRelicData Penumbrae;
-        public IRelicData Umbrae;
-
-        public Dawntrail()
+        public class Penumbrae : IRelicPhase
         {
-            Penumbrae = new IRelicData();
-            Penumbrae.ExchangeItem = Service.LuminaSheet<Item>()?.Where(row => row.RowId == 47750).FirstOrNull() ?? null;
-            Penumbrae.ExchangeItemMultiplier = 3;
+            public string Name { get; set; } = "Penumbrae";
+            public IRelicPhaseData Data { get; set; } = new();
 
-            Umbrae = new IRelicData();
-            Umbrae.ExchangeItem = Service.LuminaSheet<Item>()?.Where(row => row.RowId == 46850).FirstOrNull() ?? null;
-            Umbrae.ExchangeItemMultiplier = 3;
-
-            var classJobs = Service.LuminaSheet<ClassJob>();
-            var achievements = Service.LuminaSheet<Achievement>();
-
-            if (classJobs == null || achievements == null)
+            public Penumbrae()
             {
-                Service.Log.Error("Data initialize error.");
-                return;
+                Data.ExchangeItemId = 47750;
+                Data.ExchangeItemMultiplier = 3;
+
+                Data.ClassAchievementMap.Add(Job.Paladin, 3638);
+                Data.ClassAchievementMap.Add(Job.Monk, 3643);
+                Data.ClassAchievementMap.Add(Job.Warrior, 3639);
+                Data.ClassAchievementMap.Add(Job.Dragoon, 3642);
+                Data.ClassAchievementMap.Add(Job.Bard, 3648);
+                Data.ClassAchievementMap.Add(Job.WhiteMage, 3655);
+                Data.ClassAchievementMap.Add(Job.BlackMage, 3651);
+                Data.ClassAchievementMap.Add(Job.Summoner, 3652);
+                Data.ClassAchievementMap.Add(Job.Scholar, 3656);
+                Data.ClassAchievementMap.Add(Job.Ninja, 3644);
+                Data.ClassAchievementMap.Add(Job.Machinist, 3649);
+                Data.ClassAchievementMap.Add(Job.DarkKnight, 3640);
+                Data.ClassAchievementMap.Add(Job.Astrologian, 3657);
+                Data.ClassAchievementMap.Add(Job.Samurai, 3646);
+                Data.ClassAchievementMap.Add(Job.RedMage, 3653);
+                Data.ClassAchievementMap.Add(Job.Gunbreaker, 3641);
+                Data.ClassAchievementMap.Add(Job.Dancer, 3650);
+                Data.ClassAchievementMap.Add(Job.Reaper, 3647);
+                Data.ClassAchievementMap.Add(Job.Sage, 3658);
+                Data.ClassAchievementMap.Add(Job.Viper, 3645);
+                Data.ClassAchievementMap.Add(Job.Pictomancer, 3654);
+
             }
+        }
 
-            Penumbrae.ClassAchievementMap = new Dictionary<ClassJob, Achievement>()
-            {
-                // paladin
-                { classJobs.GetRow(19), achievements.GetRow(3752 - 114) },
-                // monk
-                { classJobs.GetRow(20), achievements.GetRow(3757 - 114) },
-                // warrior
-                { classJobs.GetRow(21), achievements.GetRow(3753 - 114) },
-                // dragoon
-                { classJobs.GetRow(22), achievements.GetRow(3756 - 114) },
-                // bard
-                { classJobs.GetRow(23), achievements.GetRow(3762 - 114) },
-                // white mage
-                { classJobs.GetRow(24), achievements.GetRow(3769 - 114) },
-                // black mage
-                { classJobs.GetRow(25), achievements.GetRow(3765 - 114) },
-                // summoner
-                { classJobs.GetRow(27), achievements.GetRow(3766 - 114) },
-                // scholar
-                { classJobs.GetRow(28), achievements.GetRow(3770 - 114) },
-                // ninja
-                { classJobs.GetRow(30), achievements.GetRow(3758 - 114) },
-                // machinist
-                { classJobs.GetRow(31), achievements.GetRow(3763 - 114) },
-                // dark knight
-                { classJobs.GetRow(32), achievements.GetRow(3754 - 114) },
-                // astrologian
-                { classJobs.GetRow(33), achievements.GetRow(3771 - 114) },
-                // samurai
-                { classJobs.GetRow(34), achievements.GetRow(3760 - 114) },
-                // red mage
-                { classJobs.GetRow(35), achievements.GetRow(3767 - 114) },
-                // gunbreaker
-                { classJobs.GetRow(37), achievements.GetRow(3755 - 114) },
-                // dancer
-                { classJobs.GetRow(38), achievements.GetRow(3764 - 114) },
-                // reaper
-                { classJobs.GetRow(39), achievements.GetRow(3761 - 114) },
-                // sage
-                { classJobs.GetRow(40), achievements.GetRow(3772 - 114) },
-                // viper
-                { classJobs.GetRow(41), achievements.GetRow(3759 - 114) },
-                // pictomancer
-                { classJobs.GetRow(42), achievements.GetRow(3768 - 114) },
-            };
+        public class Umbrae : IRelicPhase
+        {
+            public string Name { get; set; } = "Umbrae";
+            public IRelicPhaseData Data { get; set; } = new();
 
-            Umbrae.ClassAchievementMap = new Dictionary<ClassJob, Achievement>()
+            public Umbrae()
             {
-                // paladin
-                { classJobs.GetRow(19), achievements.GetRow(3752) },
-                // monk
-                { classJobs.GetRow(20), achievements.GetRow(3757) },
-                // warrior
-                { classJobs.GetRow(21), achievements.GetRow(3753) },
-                // dragoon
-                { classJobs.GetRow(22), achievements.GetRow(3756) },
-                // bard
-                { classJobs.GetRow(23), achievements.GetRow(3762) },
-                // white mage
-                { classJobs.GetRow(24), achievements.GetRow(3769) },
-                // black mage
-                { classJobs.GetRow(25), achievements.GetRow(3765) },
-                // summoner
-                { classJobs.GetRow(27), achievements.GetRow(3766) },
-                // scholar
-                { classJobs.GetRow(28), achievements.GetRow(3770) },
-                // ninja
-                { classJobs.GetRow(30), achievements.GetRow(3758) },
-                // machinist
-                { classJobs.GetRow(31), achievements.GetRow(3763) },
-                // dark knight
-                { classJobs.GetRow(32), achievements.GetRow(3754) },
-                // astrologian
-                { classJobs.GetRow(33), achievements.GetRow(3771) },
-                // samurai
-                { classJobs.GetRow(34), achievements.GetRow(3760) },
-                // red mage
-                { classJobs.GetRow(35), achievements.GetRow(3767) },
-                // gunbreaker
-                { classJobs.GetRow(37), achievements.GetRow(3755) },
-                // dancer
-                { classJobs.GetRow(38), achievements.GetRow(3764) },
-                // reaper
-                { classJobs.GetRow(39), achievements.GetRow(3761) },
-                // sage
-                { classJobs.GetRow(40), achievements.GetRow(3772) },
-                // viper
-                { classJobs.GetRow(41), achievements.GetRow(3759) },
-                // pictomancer
-                { classJobs.GetRow(42), achievements.GetRow(3768) },
-            };
+                Data.ExchangeItemId = 46850;
+                Data.ExchangeItemMultiplier = 3;
+
+                Data.ClassAchievementMap.Add(Job.Paladin, 3752);
+                Data.ClassAchievementMap.Add(Job.Monk, 3757);
+                Data.ClassAchievementMap.Add(Job.Warrior, 3753);
+                Data.ClassAchievementMap.Add(Job.Dragoon, 3756);
+                Data.ClassAchievementMap.Add(Job.Bard, 3762);
+                Data.ClassAchievementMap.Add(Job.WhiteMage, 3769);
+                Data.ClassAchievementMap.Add(Job.BlackMage, 3765);
+                Data.ClassAchievementMap.Add(Job.Summoner, 3766);
+                Data.ClassAchievementMap.Add(Job.Scholar, 3770);
+                Data.ClassAchievementMap.Add(Job.Ninja, 3758);
+                Data.ClassAchievementMap.Add(Job.Machinist, 3763);
+                Data.ClassAchievementMap.Add(Job.DarkKnight, 3754);
+                Data.ClassAchievementMap.Add(Job.Astrologian, 3771);
+                Data.ClassAchievementMap.Add(Job.Samurai, 3760);
+                Data.ClassAchievementMap.Add(Job.RedMage, 3767);
+                Data.ClassAchievementMap.Add(Job.Gunbreaker, 3755);
+                Data.ClassAchievementMap.Add(Job.Dancer, 3764);
+                Data.ClassAchievementMap.Add(Job.Reaper, 3761);
+                Data.ClassAchievementMap.Add(Job.Sage, 3772);
+                Data.ClassAchievementMap.Add(Job.Viper, 3759);
+                Data.ClassAchievementMap.Add(Job.Pictomancer, 3768);
+            }
         }
     }
 }
