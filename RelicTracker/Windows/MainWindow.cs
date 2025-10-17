@@ -63,17 +63,16 @@ public class MainWindow : Window, IDisposable
             achievementsRequested = false;
         }
 
-        if (ImGui.Button("Show Settings"))
-        {
-            plugin.ToggleConfigUi();
-        }
-
         ImGui.Spacing();
-
         Util.DrawRelicsTable(_dawntrail_relic.Penumbrae);
-
         ImGui.Spacing();
 
         ImGui.Text($"Remaining {_dawntrail_relic.Penumbrae.ExchangeItem!.Value.Name}: {(_dawntrail_relic.Penumbrae.ClassAchievementMap.Count - _dawntrail_relic.Penumbrae.GetCompletedCount()) * _dawntrail_relic.Penumbrae.ExchangeItemMultiplier}");
+
+        ImGui.Spacing();
+        Util.DrawRelicsTable(_dawntrail_relic.Umbrae);
+        ImGui.Spacing();
+
+        ImGui.Text($"Remaining {_dawntrail_relic.Umbrae.ExchangeItem!.Value.Name}: {(_dawntrail_relic.Umbrae.ClassAchievementMap.Count - _dawntrail_relic.Umbrae.GetCompletedCount()) * _dawntrail_relic.Umbrae.ExchangeItemMultiplier}");
     }
 }
