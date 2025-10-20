@@ -64,34 +64,47 @@ public class MainWindow : Window, IDisposable
             achievementsRequested = false;
         }
 
-        if (ImGui.BeginTabBar("DawntrailRelicTabs", ImGuiTabBarFlags.None))
+        if (ImGui.BeginTabBar("RelicTabs", ImGuiTabBarFlags.None))
         {
-            if (ImGui.BeginTabItem("Penumbrae"))
+            if (ImGui.BeginTabItem("Dawntrail"))
             {
-                using (var child = ImRaii.Child("PenumbraeChild", Vector2.Zero, true))
+                using (var tChild = ImRaii.Child("PenumbraeChild", Vector2.Zero, false))
                 {
-                    // Check if this child is drawing
-                    if (child.Success)
+                    if (ImGui.BeginTabBar("DawntrailRelicTabs", ImGuiTabBarFlags.None))
                     {
-                        Util.DrawRelicsTable(_dawntrailPenumbraeRelic.Data);
-                        ImGui.Spacing();
-                        ImGui.Text(_dawntrailPenumbraeRelic.Data.GetRemainText());
-                    }
-                }
-                
-                ImGui.EndTabItem();
-            }
+                        if (ImGui.BeginTabItem("Penumbrae"))
+                        {
+                            using (var child = ImRaii.Child("PenumbraeChild", Vector2.Zero, true))
+                            {
+                                // Check if this child is drawing
+                                if (child.Success)
+                                {
+                                    Util.DrawRelicsTable(_dawntrailPenumbraeRelic.Data);
+                                    ImGui.Spacing();
+                                    ImGui.Text(_dawntrailPenumbraeRelic.Data.GetRemainText());
+                                }
+                            }
 
-            if (ImGui.BeginTabItem("Umbrae"))
-            {
-                using (var child = ImRaii.Child("UmbraeChild", Vector2.Zero, true))
-                {
-                    // Check if this child is drawing
-                    if (child.Success)
-                    {
-                        Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
-                        ImGui.Spacing();
-                        ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
+                            ImGui.EndTabItem();
+                        }
+
+                        if (ImGui.BeginTabItem("Umbrae"))
+                        {
+                            using (var child = ImRaii.Child("UmbraeChild", Vector2.Zero, true))
+                            {
+                                // Check if this child is drawing
+                                if (child.Success)
+                                {
+                                    Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
+                                    ImGui.Spacing();
+                                    ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
+                                }
+                            }
+
+                            ImGui.EndTabItem();
+                        }
+
+                        ImGui.EndTabBar();
                     }
                 }
 
