@@ -19,16 +19,11 @@ namespace RelicTracker.Data
 
             public int ExchangeItemMultiplier { get; set; } = 0;
 
-            public Dictionary<int, int> ClassAchievementMap { get; set; } = new();
+            public Dictionary<Job, int> ClassAchievementMap { get; set; } = new();
 
             public Item? GetExchangeItem()
             {
                 return Service.LuminaSheet<Item>()?.Where(row => row.RowId == ExchangeItemId).FirstOrNull() ?? null;
-            }
-
-            public Achievement? GetAchievement(int achievementId)
-            {
-                return Service.LuminaSheet<Achievement>()?.Where(row => row.RowId == achievementId).FirstOrNull() ?? null;
             }
 
             public int GetCompletedAchievementsCount()
@@ -36,7 +31,7 @@ namespace RelicTracker.Data
                 var count = 0;
                 foreach (var item in ClassAchievementMap.Values)
                 {
-                    if (Util.GetIsComplete((uint)item))
+                    if (Util.GetAchievementIsComplete((uint)item))
                         count++;
                 }
                 return count;

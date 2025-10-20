@@ -31,7 +31,7 @@ public sealed class Plugin : IDalamudPlugin
 
         Service.CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
         {
-            HelpMessage = "A useful message to display in /xlhelp"
+            HelpMessage = "Open main window"
         });
 
         // Tell the UI system that we want our windows to be drawn throught he window system

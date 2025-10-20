@@ -3,6 +3,7 @@ using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility.Raii;
 using FFXIVClientStructs.FFXIV.Common.Math;
+using Lumina.Excel.Sheets;
 using RelicTracker.Data;
 using System;
 using System.Linq;
@@ -35,8 +36,8 @@ namespace RelicTracker
                 for (var i = 0; i < relicData.ClassAchievementMap.Count; i++)
                 {
                     var p = relicData.ClassAchievementMap.ElementAt(i);
-                    var job = Job.GetJob(p.Key);
-                    var achi = relicData.GetAchievement(p.Value);
+                    var job = GetJob(p.Key);
+                    var achi = GetAchievement(p.Value);
 
                     if (job == null || achi == null)
                     {
@@ -52,7 +53,7 @@ namespace RelicTracker
                     ImGui.TextUnformatted(achi.Value.Description.ToString());
 
                     ImGui.TableNextColumn();
-                    var active = GetIsComplete(achi.Value.RowId);
+                    var active = GetAchievementIsComplete(achi.Value.RowId);
 
                     using var color = new ImRaii.Color();
                     color.Push(ImGuiCol.TextDisabled, !active ? ImGuiColors.DalamudRed : ImGuiColors.ParsedGreen);
@@ -76,7 +77,7 @@ namespace RelicTracker
             }
         }
 
-        public static unsafe bool GetIsComplete(uint RowId)
+        public static unsafe bool GetAchievementIsComplete(uint RowId)
         {
             var achievement = FFXIVClientStructs.FFXIV.Client.Game.UI.Achievement.Instance();
             if (!achievement->IsLoaded())
@@ -84,6 +85,16 @@ namespace RelicTracker
                 return false;
             }
             return achievement->IsComplete((int)RowId);
+        }
+
+        public static Achievement? GetAchievement(int achievementId)
+        {
+            return Service.LuminaSheet<Achievement>()?.GetRow((uint)achievementId) ?? null;
+        }
+
+        public static ClassJob? GetJob(Job jobId)
+        {
+            return Service.LuminaSheet<ClassJob>()?.GetRow((uint)jobId) ?? null;
         }
     }
 }
