@@ -12,7 +12,7 @@ public sealed class Plugin : IDalamudPlugin
     public Configuration Configuration { get; init; }
 
     public readonly WindowSystem WindowSystem = new("RelicTracker");
-    private ConfigWindow ConfigWindow { get; init; }
+    //private ConfigWindow ConfigWindow { get; init; }
     private MainWindow MainWindow { get; init; }
     public IDalamudPluginInterface PluginInterface { get; init; }
 
@@ -21,12 +21,13 @@ public sealed class Plugin : IDalamudPlugin
         PluginInterface = pluginInterface;
         Service.Initialize(pluginInterface);
 
-        Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
+        Configuration = new Configuration();
+        //Configuration = PluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
-        ConfigWindow = new ConfigWindow(this);
+        //ConfigWindow = new ConfigWindow(this);
         MainWindow = new MainWindow(this);
 
-        WindowSystem.AddWindow(ConfigWindow);
+        //WindowSystem.AddWindow(ConfigWindow);
         WindowSystem.AddWindow(MainWindow);
 
         Service.CommandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
@@ -39,7 +40,7 @@ public sealed class Plugin : IDalamudPlugin
 
         // This adds a button to the plugin installer entry of this plugin which allows
         // toggling the display status of the configuration ui
-        PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
+        //PluginInterface.UiBuilder.OpenConfigUi += ToggleConfigUi;
 
         // Adds another button doing the same but for the main ui of the plugin
         PluginInterface.UiBuilder.OpenMainUi += ToggleMainUi;
@@ -49,12 +50,12 @@ public sealed class Plugin : IDalamudPlugin
     {
         // Unregister all actions to not leak anythign during disposal of plugin
         PluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
-        PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
+        //PluginInterface.UiBuilder.OpenConfigUi -= ToggleConfigUi;
         PluginInterface.UiBuilder.OpenMainUi -= ToggleMainUi;
 
         WindowSystem.RemoveAllWindows();
 
-        ConfigWindow.Dispose();
+        //ConfigWindow.Dispose();
         MainWindow.Dispose();
 
         Service.CommandManager.RemoveHandler(CommandName);
@@ -65,6 +66,6 @@ public sealed class Plugin : IDalamudPlugin
         MainWindow.Toggle();
     }
 
-    public void ToggleConfigUi() => ConfigWindow.Toggle();
+    //public void ToggleConfigUi() => ConfigWindow.Toggle();
     public void ToggleMainUi() => MainWindow.Toggle();
 }
