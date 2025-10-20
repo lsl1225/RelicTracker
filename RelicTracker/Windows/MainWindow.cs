@@ -22,7 +22,7 @@ public class MainWindow : Window, IDisposable
     {
         SizeConstraints = new WindowSizeConstraints
         {
-            MinimumSize = new Vector2(720, 360),
+            MinimumSize = new Vector2(840, 340),
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
 
@@ -64,16 +64,41 @@ public class MainWindow : Window, IDisposable
             achievementsRequested = false;
         }
 
-        ImGui.Spacing();
-        ImGui.Text(_dawntrailPenumbraeRelic.Name);
-        Util.DrawRelicsTable(_dawntrailPenumbraeRelic.Data);
-        ImGui.Spacing();
-        ImGui.Text(_dawntrailPenumbraeRelic.Data.GetRemainText());
+        if (ImGui.BeginTabBar("DawntrailRelicTabs", ImGuiTabBarFlags.None))
+        {
+            if (ImGui.BeginTabItem("Penumbrae"))
+            {
+                using (var child = ImRaii.Child("PenumbraeChild", Vector2.Zero, true))
+                {
+                    // Check if this child is drawing
+                    if (child.Success)
+                    {
+                        Util.DrawRelicsTable(_dawntrailPenumbraeRelic.Data);
+                        ImGui.Spacing();
+                        ImGui.Text(_dawntrailPenumbraeRelic.Data.GetRemainText());
+                    }
+                }
+                
+                ImGui.EndTabItem();
+            }
 
-        ImGui.Spacing();
-        ImGui.Text(_dawntrailUmbraeRelic.Name);
-        Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
-        ImGui.Spacing();
-        ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
+            if (ImGui.BeginTabItem("Umbrae"))
+            {
+                using (var child = ImRaii.Child("UmbraeChild", Vector2.Zero, true))
+                {
+                    // Check if this child is drawing
+                    if (child.Success)
+                    {
+                        Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
+                        ImGui.Spacing();
+                        ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
+                    }
+                }
+
+                ImGui.EndTabItem();
+            }
+
+            ImGui.EndTabBar();
+        }
     }
 }
