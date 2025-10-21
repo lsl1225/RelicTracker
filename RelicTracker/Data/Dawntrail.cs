@@ -35,7 +35,6 @@ namespace RelicTracker.Data
                 Data.ClassAchievementMap.Add(Job.Sage, 3658);
                 Data.ClassAchievementMap.Add(Job.Viper, 3645);
                 Data.ClassAchievementMap.Add(Job.Pictomancer, 3654);
-
             }
         }
 
