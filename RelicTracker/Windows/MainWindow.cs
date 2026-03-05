@@ -16,6 +16,7 @@ public class MainWindow : Window, IDisposable
 
     public static readonly Dawntrail.Penumbrae _dawntrailPenumbraeRelic = new();
     public static readonly Dawntrail.Umbrae _dawntrailUmbraeRelic = new();
+    public static readonly Dawntrail.Obscurum _dawntrailObscurumRelic = new();
 
     public MainWindow(Plugin plugin)
         : base("Relic Tracker##RelicTrackerMain", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
@@ -98,6 +99,22 @@ public class MainWindow : Window, IDisposable
                                     Util.DrawRelicsTable(_dawntrailUmbraeRelic.Data);
                                     ImGui.Spacing();
                                     ImGui.Text(_dawntrailUmbraeRelic.Data.GetRemainText());
+                                }
+                            }
+
+                            ImGui.EndTabItem();
+                        }
+
+                        if (ImGui.BeginTabItem("Obscurum"))
+                        {
+                            using (var child = ImRaii.Child("ObscurumChild", Vector2.Zero, true))
+                            {
+                                // Check if this child is drawing
+                                if (child.Success)
+                                {
+                                    Util.DrawRelicsTable(_dawntrailObscurumRelic.Data);
+                                    ImGui.Spacing();
+                                    ImGui.Text(_dawntrailObscurumRelic.Data.GetRemainText());
                                 }
                             }
 

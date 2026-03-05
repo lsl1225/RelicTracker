@@ -71,5 +71,39 @@ namespace RelicTracker.Data
                 Data.ClassAchievementMap.Add(Job.Pictomancer, 3768);
             }
         }
+
+        public class Obscurum : IRelicPhase
+        {
+            public string Name { get; set; } = "Obscurum";
+            public IRelicPhaseData Data { get; set; } = new();
+
+            public Obscurum()
+            {
+                Data.ExchangeItemId = 50058;
+                Data.ExchangeItemMultiplier = 3;
+
+                Data.ClassAchievementMap.Add(Job.Paladin, 3842);
+                Data.ClassAchievementMap.Add(Job.Monk, 3847);
+                Data.ClassAchievementMap.Add(Job.Warrior, 3843);
+                Data.ClassAchievementMap.Add(Job.Dragoon, 3846);
+                Data.ClassAchievementMap.Add(Job.Bard, 3852);
+                Data.ClassAchievementMap.Add(Job.WhiteMage, 3859);
+                Data.ClassAchievementMap.Add(Job.BlackMage, 3855);
+                Data.ClassAchievementMap.Add(Job.Summoner, 3856);
+                Data.ClassAchievementMap.Add(Job.Scholar, 3860);
+                Data.ClassAchievementMap.Add(Job.Ninja, 3848);
+                Data.ClassAchievementMap.Add(Job.Machinist, 3853);
+                Data.ClassAchievementMap.Add(Job.DarkKnight, 3844);
+                Data.ClassAchievementMap.Add(Job.Astrologian, 3861);
+                Data.ClassAchievementMap.Add(Job.Samurai, 3850);
+                Data.ClassAchievementMap.Add(Job.RedMage, 3857);
+                Data.ClassAchievementMap.Add(Job.Gunbreaker, 3845);
+                Data.ClassAchievementMap.Add(Job.Dancer, 3854);
+                Data.ClassAchievementMap.Add(Job.Reaper, 3851);
+                Data.ClassAchievementMap.Add(Job.Sage, 3862);
+                Data.ClassAchievementMap.Add(Job.Viper, 3849);
+                Data.ClassAchievementMap.Add(Job.Pictomancer, 3858);
+            }
+        }
     }
 }
