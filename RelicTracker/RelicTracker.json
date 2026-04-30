@@ -4,5 +4,5 @@
     "Punchline": "Tracking your relic progression.",
     "Description": "A plugin that can track your relic progression. (Currently dawntrail only)",
     "ApplicableVersion": "any",
-    "DalamudApiLevel": 13
+    "DalamudApiLevel": 15
 }

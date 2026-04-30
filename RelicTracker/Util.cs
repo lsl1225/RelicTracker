@@ -55,8 +55,7 @@ namespace RelicTracker
                     ImGui.TableNextColumn();
                     var active = GetAchievementIsComplete(achi.Value.RowId);
 
-                    using var color = new ImRaii.Color();
-                    color.Push(ImGuiCol.TextDisabled, !active ? ImGuiColors.DalamudRed : ImGuiColors.ParsedGreen);
+                    ImRaii.PushColor(ImGuiCol.TextDisabled, !active ? ImGuiColors.DalamudRed : ImGuiColors.ParsedGreen);
 
                     using (ImRaii.PushFont(UiBuilder.IconFont))
                     {
